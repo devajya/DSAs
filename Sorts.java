@@ -134,9 +134,42 @@ public class Sorts {
         return arrToString(arr);
     }
 
+    public static int partition(int[] arr, int position1, int position2){
+        //Chose a pivot I am always choosing the last element in arr
+        int pivot = arr[position2];
+        int tracker = position1-1;
+        for(int i=position1; i<position2; i++){
+            if(arr[i]<pivot){
+                tracker++;
+                int temp = arr[i];
+                arr[i] = arr[tracker];
+                arr[tracker] = temp;
+            }
+        }
+        int temp = arr[position2-1];
+        arr[position2-1] = arr[tracker];
+        arr[tracker] = temp;
+        return tracker+1;
+    }
 
-    //TODO Quick Sort
-    
+    /**
+     * re implements the standard quicksort algorithm, which works by dividing the array repeatedly into parts with
+     * elements that are smaller and larger than the pivot element.
+     * Worst Case - O(n^2) : Best Case - O(nlog(n))
+     * @param arr - array to be sorted
+     * @param start - starting index from where to sort
+     * @param end - ending index for sorting
+     * @return String representation of the sorted array
+     */
+    public static String quickSort(int[] arr, int start, int end){
+        if (start < end) {
+            int partitionIndex = partition(arr, start, end);
+            quickSort(arr, start, partitionIndex-1);
+            quickSort(arr, partitionIndex+1, end);
+        }
+        return arrToString(arr);
+    }
+
     /**
      * Converts an array to a string representation
      * Effectively overrides Arrays.toString(arr);
